@@ -1,51 +1,57 @@
 name: Game Documentation
-on: 
+
+on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
-permissions: 
+permissions:
   contents: read
   pages: write
-  deployments: write
   id-token: write
 
 jobs:
   docs:
     runs-on: windows-latest
+
     environment:
       name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
-    steps:
-      - name: Check Installed Software
-        run: where git & where python & where pip
-        shell: cmd
-        
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          submodules: 'recursive'
+      url: ${{ steps.deployment.outputs.page_url }}
 
-      - name: Install Conan
-        run: pip install conan
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Doxygen
-        run: conan download doxygen/1.17.0@#7bbd9853ee4859042bea8683d68e418e:9f839a3d76e1fd667acf68381254d811321c9026 --remote conancenter
-        
+        shell: powershell
+        run: |
+          choco install doxygen.install -y
+          doxygen --version
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Run Doxygen
-        run: ${{ env.DOXYGEN_EXE_PATH }} ${{ github.workspace }}\devops_data\Doxyfile
-        
-      - name: Upload Docs
-        uses: actions/upload-pages-artifact@v5
+        shell: powershell
+        run: |
+          doxygen "${{ github.workspace }}\devops_data\Doxyfile"
+
+      - name: Check generated documentation
+        shell: powershell
+        run: |
+          if (-not (Test-Path "${{ github.workspace }}\Documentation\html\index.html")) {
+              Write-Error "Doxygen did not generate Documentation\html\index.html"
+              Get-ChildItem -Recurse "${{ github.workspace }}\Documentation" -ErrorAction SilentlyContinue
+              exit 1
+          }
+
+      - name: Upload documentation
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: Documentation\html
-          
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
-        
-      - name: Deploy To GitHub Pages
+          path: Documentation/html
+
+      - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
