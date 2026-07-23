@@ -13,7 +13,7 @@ NEW_LINE
 NEW_LINE
 void FTestClassName::Define()
 {
-
+  Describe("Subcategory", [this]() { It("TextName", [this]() {}); });
 }
 NEW_LINE
 #endif
