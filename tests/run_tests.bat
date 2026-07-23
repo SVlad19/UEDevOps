@@ -28,11 +28,16 @@ set Module=%RETVAL%
 call :NORMALIZEPATH "%SourceCodePath%"
 set Sources=%RETVAL%
 
-call :NORMALIZEPATH "%ExcludedPathForTestReport%"
-set ExcludedSources=%RETVAL%
+call :NORMALIZEPATH "%ExcludedPathForPrivateTestReport%"
+set ExcludedPrivateSources=%RETVAL%
+
+call :NORMALIZEPATH "%ExcludedPathForPublicTestReport%"
+set ExcludedPublicSources=%RETVAL%
 
 "%OpenCPPCoveragePath%" --modules="%Module%" --sources="%Sources%" ^
---excluded_sources="%ExcludedSources%" --export_type="%ExportType%" -v -- %TestRunner%
+--excluded_sources="%ExcludedPrivateSources%" ^
+--excluded_sources="%ExcludedPublicSources%" ^
+--export_type="%ExportType%" -v -- %TestRunner%
 
 rem clean obsolete artifacts
 del /q LastCoverageResults.log
