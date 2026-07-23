@@ -1,5 +1,5 @@
 #if WITH_AUTOMATION_TESTS
-#include "Tests/TestUtils.h"
+#include "Tests/Utils/TestUtils.h"
 #include "Misc/OutputDeviceNull.h"
 #include "EnhancedInputSubsystems.h"
 #include "AutomationBlueprintFunctionLibrary.h"
