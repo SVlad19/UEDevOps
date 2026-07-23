@@ -27,6 +27,6 @@ Add the required modules to `MyGame.Build.cs`:
 
 ```cpp
 PublicDependencyModuleNames.AddRange(
-    new string[] { "Json", "JsonUtilities", "UMG" }
+    new string[] { "Json", "JsonUtilities", "UMG", "EnhancedInput" }
 );
 ```
