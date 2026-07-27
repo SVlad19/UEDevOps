@@ -19,7 +19,7 @@ pipeline {
 		GIT_BRANCH_GAME = main
         SLACK_CHANNEL = ''
         DOXYGEN_PATH = 'doxygen'
-        DOXYFILE_PATH = "$BUILD_DIR\\devops\\docs\\doxyfile"
+        DOXYFILE_PATH = "$BUILD_DIR\\devops_data\\Doxyfile"
         DOCS_DIR = Documentation\\html
     }*/
 
