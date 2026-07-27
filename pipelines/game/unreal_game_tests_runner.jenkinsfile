@@ -22,13 +22,17 @@ pipeline {
         BUILD_FLAGS = '-build -cook -ubtargs="-UnoptimizedCode"' 
         SLACK_CHANNEL = ''
         EDITOR_PATH = 'E:\\JenkinsJobs\\UE_5.7_InstalledBuild\\Windows\\Engine\\Binaries\\Win64\\UnrealEditor.exe'
+		PLATFORM = 'Win64'
+		CONFIG = 'Development'
         TEST_NAMES =
         TEST_OUTPUT_PATH = "$BUILD_DIR\\Build\\Tests"
         EDITOR_FLAGS = '-stdout -nosplash'
         CODE_COVERAGE_EXPORT_TYPE = "cobertura:$BUILD_DIR\\Build\\Tests\\Coverage.xml"
         OPEN_CPP_COVERAGE_PATH = 'E:\\OpenCppCoverage\\OpenCppCoverage.exe'
         SOURCE_CODE_PATH = "$BUILD_DIR\\Source"
-        EXCLUDED_SOURCES = "$BUILD_DIR\\Source\\TPS\\Private\\Tests"
+        EXCLUDED_SOURCES = "$BUILD_DIR\\Source\\<ProjectName>\\Private\\Tests"
+		PROJECT_PURE_NAME = 
+		UNOPTIMIZED_BUILD = 'false'
         TEST_EXTRA_CMD = 'SetPriority Critical'
         */
 
